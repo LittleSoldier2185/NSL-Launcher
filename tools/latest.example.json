@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "products": {
+    "launcher": {
+      "version": "1.1.0",
+      "url": "https://github.com/<user>/<repo>/releases/download/v1.1.0/app-1.1.0.zip",
+      "sha256": "<sha256 ของไฟล์ zip ตัวพิมพ์เล็ก>",
+      "size": 0,
+      "notes": "<สิ่งที่เปลี่ยนในเวอร์ชันนี้>"
+    }
+  }
+}
