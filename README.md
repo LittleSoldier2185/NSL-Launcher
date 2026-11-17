@@ -1,17 +1,70 @@
-# nsl_launcher
+# NSL Launcher
 
-NSL Launcher - แหล่งโหลดและจัดการแอป NSL
+แหล่งโหลดและจัดการแอป NSL — แอปเดสก์ท็อปบน Windows สร้างด้วย Flutter
 
-## Getting Started
+> **สถานะ:** อยู่ระหว่างพัฒนา — เฟส 0–3 เสร็จแล้ว (โครงแอป, engine ธีม, หน้าตา, หน้าจัดการธีม) ส่วนคลังโปรแกรมและการติดตั้ง/อัปเดตจริง (เฟส 4) ยังไม่เริ่ม รายละเอียดดูที่ [progress.md](progress.md)
 
-This project is a starting point for a Flutter application.
+## ฟีเจอร์ที่มีแล้ว
 
-A few resources to get you started if this is your first Flutter project:
+- **ธีม `.nslt`** — อ่าน/เขียน/resolve ธีม เก็บที่ `Documents\NSL\Themes` ใช้ร่วมกับแอป NSL อื่น และ Launcher ไม่ทำข้อมูลส่วนขยายของแอปอื่นหาย
+- **หน้าตาตามดีไซน์** — แถบข้าง, คลังโปรแกรม, รายละเอียดโปรแกรม, ตั้งค่า รองรับจอแคบ (≤ 900px) และเปลี่ยนธีมสด
+- **หน้าจัดการธีม** — นำเข้า / ส่งออก / ลบ / เลือกธีมให้แอป
+- **ชุดอัปเดตตัวเอง** — `stub` + `updater` ตรวจ SHA-256 และแตกไฟล์อย่างปลอดภัย (กัน zip-slip)
+- **การเข้าถึง** — ปุ่มมีป้ายชื่อ พื้นที่แตะ ≥ 44px และไม่ overflow ที่ความกว้างและขนาดตัวอักษรหลายระดับ
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## ยังไม่ได้ทำ
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- คลังโปรแกรมจริง (manifest), ติดตั้ง/อัปเดต/เปิด/ถอนโปรแกรม (เฟส 4)
+- ปล่อยเวอร์ชันและย้อนกลับ ทดสอบบน Windows จริง (เฟส 5)
+- ส่งไฟล์ไปมือถือผ่าน LAN
+
+ตอนนี้ข้อมูลโปรแกรมเป็นรายการคงที่ ปุ่มติดตั้งจึงถูกปิดไว้ ใช้ `--demo` เพื่อดูตัวอย่างหน้าตา (ไม่ใช่สถานะจริง)
+
+## ความต้องการ
+
+- Windows 10/11
+- [Flutter SDK](https://docs.flutter.dev/get-started/install/windows) (Dart ^3.13.7) พร้อม Visual Studio สำหรับ Windows desktop
+
+## เริ่มใช้งาน
+
+```bash
+flutter pub get
+flutter run -d windows
+```
+
+ตัวเลือกตอนรัน:
+
+| ตัวเลือก | ความหมาย |
+|---|---|
+| `--demo` | แสดงข้อมูลตัวอย่างตามดีไซน์ |
+| `--safe-mode` | ใช้ธีมของ Launcher เองล้วน ๆ |
+
+## ทดสอบและตรวจโค้ด
+
+```bash
+flutter analyze
+flutter test
+```
+
+เทสต์ภาพหน้าจอจะถูกข้ามหากไม่ตั้งตัวแปร `NSL_SHOTS_DIR`
+
+## สร้างและปล่อยเวอร์ชัน
+
+```bash
+flutter build windows
+```
+
+สคริปต์ปล่อยเวอร์ชันและรายละเอียดระบบอัปเดตอยู่ใน [`tools/`](tools/) (ดู [UPDATER-README.md](tools/UPDATER-README.md))
+
+## โครงสร้างโปรเจกต์
+
+| โฟลเดอร์ | หน้าที่ |
+|---|---|
+| `lib/theme_engine/` | engine ธีม `.nslt` (tokens, parse, resolve, ที่เก็บ, watcher) |
+| `lib/update/` | ตัวอัปเดตตัวเอง |
+| `stub/` | ตัวเปิดแอป (stub) |
+| `tool/`, `tools/` | สคริปต์ซิงก์ธีมจาก core และสคริปต์ปล่อยเวอร์ชัน |
+| `assets/` | ไอคอน โลโก้ ฟอนต์ (Noto Sans Thai, Space Grotesk — OFL) และธีมในตัว |
+| `test/` | เทสต์ทั้งหมด (updater, ธีม, UI, parity กับ core) |
+
+แผนงานทั้งหมดอยู่ที่ [Plan.md](Plan.md)
